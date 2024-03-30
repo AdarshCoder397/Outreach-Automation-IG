@@ -6,8 +6,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import StaleElementReferenceException
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
-from Dummy import Niche,UserId,passWord
+from Dummy import Niche,UserId,passWord,NoOfLeads
 
 
 driver = webdriver.Chrome()
@@ -22,7 +23,7 @@ submitXpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/section/main/arti
 submitXpath2 = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/section/main/article/div[2]/div[1]/div[2]/form/div/div[3]"
 NNxpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/div/div"
 NNxpath2 = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/div/div/div/div/div"
-LaterBtnXpath = "/html/body/div[4]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/button[2]"
+LaterBtnXpath = "/html/body/div[3]/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/button[2]"
 searchXpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[1]/div/div/div/div/div[2]/div[2]/span/div/a/div"
 searchInpXpath = "/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div/div[1]/div/div/input"
 try:
@@ -39,6 +40,7 @@ except Exception as e:
     submitBtn = driver.find_element(By.XPATH, submitXpath2)
 
 
+print("Processing...")
 userName.send_keys(UserId)
 passKey.send_keys(passWord)
 submitBtn.click()
@@ -50,8 +52,8 @@ except Exception as e:
 NotNowBtn.click()
 time.sleep(10)
 
-# LaterBtn = driver.find_element(By.XPATH, LaterBtnXpath)
-# LaterBtn.click()
+LaterBtn = driver.find_element(By.XPATH, LaterBtnXpath)
+LaterBtn.click()
 
 searchBtn = driver.find_element(By.XPATH,searchXpath)
 searchBtn.click()
@@ -59,6 +61,18 @@ time.sleep(1)
 searchInBtn = driver.find_element(By.XPATH, searchInpXpath)
 searchInBtn.send_keys(f"#{Niche}")
 searchInBtn.send_keys(Keys.ENTER)
+
+time.sleep(3)
+
+NoOfTimes = int(NoOfLeads/5)
+for i in range(NoOfTimes):
+    tempHashXpath = f"/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div/div/div[2]/div/div/div[2]/div/a[{i+1}]"
+    HashBtn = driver.find_element(By.XPATH, tempHashXpath)
+    ActionChains(driver) \
+    .key_down(Keys.CONTROL) \
+    .click(HashBtn) \
+    .key_up(Keys.CONTROL) \
+    .perform()
 
 time.sleep(150000)
 
