@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.keys import Keys
-from Dummy import Niche
+from Dummy import Niche,UserId,passWord
 
 
 driver = webdriver.Chrome()
@@ -39,8 +39,8 @@ except Exception as e:
     submitBtn = driver.find_element(By.XPATH, submitXpath2)
 
 
-userName.send_keys('digi.adarsh')
-passKey.send_keys('coder01234')
+userName.send_keys(UserId)
+passKey.send_keys(passWord)
 submitBtn.click()
 time.sleep(10)
 try:
